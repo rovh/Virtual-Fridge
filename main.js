@@ -12,6 +12,7 @@ scene.background = new THREE.Color( 0xffffff );
 
 // Настройка камеры
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+camera.position.set( 0, 120, 100 );
 
 
 
@@ -22,18 +23,34 @@ const renderer = new THREE.WebGLRenderer
     // precision: "highp",
     // powerPreference: "high-performance"
 });
-
 renderer.setSize( window.innerWidth, window.innerHeight );
-renderer.setClearColor( 0xffffff, 0);
+// renderer.setClearColor( 0xffffff, 0);
 document.body.appendChild( renderer.domElement );
 
 
-
-const controls = new OrbitControls( camera, renderer.domElement );
-
 //controls.update() must be called after any manual changes to the camera's transform
-camera.position.set( 0, 20, 100 );
+const controls = new OrbitControls( camera, renderer.domElement );
 controls.update();
+
+
+
+function onWindowResize()
+{
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    
+}
+
+
+
+
+
+
+
+
 
 
 // Глобальное освещение
@@ -59,8 +76,8 @@ controls.update();
 let array = [];
 
 const glftLoader = new GLTFLoader();
-    glftLoader.load('./static/Fridge.gltf', (gltfScene)=>
-    {
+glftLoader.load('./static/Fridge.gltf', (gltfScene)=>
+{
 
         gltfScene.scene.rotation.y = Math.PI/-2;
 
@@ -83,7 +100,7 @@ const glftLoader = new GLTFLoader();
         
 
         scene.add(gltfScene.scene);
-    });
+});
 
 
 let INTERSECTED;
@@ -91,7 +108,8 @@ let INTERSECTED;
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
     
-    function onPointerDown( event ) {
+function onPointerDown( event ) 
+{
 
         pointer.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1 );
 
@@ -100,7 +118,7 @@ const pointer = new THREE.Vector2();
         check_intersection();
        
 
-    }
+}
 
 
 function check_intersection()
@@ -167,5 +185,6 @@ function animate() {
 // Запуск анимации
 
 animate();
+window.addEventListener('resize', onWindowResize, false)
 document.addEventListener( 'pointerdown', onPointerDown );
 
