@@ -68,9 +68,6 @@ const glftLoader = new GLTFLoader();
 
         const scale_factor = 2;
         gltfScene.scene.scale.set(scale_factor, scale_factor, scale_factor);
-        
-        // console.log(gltfScene.scene.getObjectByName('Meat'))
-        
 
         gltfScene.scene.traverse(object => {
             object.castShadow = true;
@@ -82,6 +79,7 @@ const glftLoader = new GLTFLoader();
         });
         
         // console.log(gltfScene.scene.getObjectByName('Meat')).material.color.setHex(0x00ff00);
+        console.log(array);
         
 
         scene.add(gltfScene.scene);
@@ -99,14 +97,13 @@ const pointer = new THREE.Vector2();
 
         raycaster.setFromCamera( pointer, camera );
         
-
-        check_intersection('Eggs');
+        check_intersection();
        
 
     }
 
 
-function check_intersection(object_name)
+function check_intersection()
 {
      
     let check_bool;
@@ -120,10 +117,25 @@ function check_intersection(object_name)
             
             check_bool = true;
             // console.log(object_name)
-            console.log(scene.children[2].children)
+            // console.log(scene.children[2].children)
 
-            console.log(intersects[0].object.name);
+            let object = intersects[0].object
+
+            while(object.type != 'Object3D')
+            {
+                object = object.parent;
+            }
+
+            while (object.parent.type == 'Object3D')
+            {
+                object = object.parent;
+            }
+
+            console.log(object.name);
+
+            // console.log(intersects[0].object.name);
             // console.log(intersects[0].object.parent.name);
+           
             // INTERSECTED = intersects[0].object;
             // INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
             // INTERSECTED.material.emissive.setHex( 0xffffff );
