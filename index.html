@@ -3,9 +3,40 @@
     <head>
         <meta charset="utf-8"> 
         <title>My first three.js app</title> 
-        <style> body { margin: 0; } </style> 
+        <style> body { margin: 0; } </style>
+        <link rel="stylesheet" href="css/main.css">
+        <!-- <link rel="stylesheet" href="css/normalize.css"> -->
+
     </head> 
     <body>
-        <script src="./main.js" type="module"></script> 
+
+        <header class="header" id="container">
+
+            <div class="container header__container">
+                <button class="header__burger-btn" id="burger">
+                    <span></span><span></span><span></span>
+                </button>
+                <!-- <a href="#" class="logo">
+                    <img class="logo__img" src="/img/logo.svg" alt="Логотип">
+                </a> -->
+                <nav class="menu">
+                    <ul class="menu__list">
+                        <li class="menu__item">
+                            <a class="menu__link" href="#">
+                                Продукт:
+                            </a>
+                        </li>  
+                        <li class='menu__item'>
+                            <a class="menu__link" id="my_word" href="#"></a>
+                        </li>                     
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+    <script src="./main.js" type="module"></script>
+    <script src="./three.js" type="module"></script>
+    <script src="./functions_for_three.js" type="module"></script>
+         
     </body>
 </html>
