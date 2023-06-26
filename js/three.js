@@ -10,19 +10,22 @@ import * as THREE from 'three';
 
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { FirstPersonControls } from 'three/addons/controls/FirstPersonControls.js';
+
 
 // Настройки сцены
 const scene = new THREE.Scene();
-// const spaceTexture = new THREE.TextureLoader().load('images/space.jpg');
-// scene.background = spaceTexture;
 scene.background = new THREE.Color( 0xffffff );
 
+
 // Настройка камеры
-const camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
-camera.position.set( 0, 120, 100 );
-
-
-
+var camera = new THREE.PerspectiveCamera( 50, window.innerWidth/window.innerHeight, 0.1, 20000 );
+// camera.position.set( 0, 120, 100 );
+// camera.position.set( 0, 1020, 1000 );
+// camera.position.y = 1000;
+camera.position.z = 100;
+// camera.position.x = -1000;
+scene.add(camera);
 
 // Настройка renderer
 const renderer = new THREE.WebGLRenderer
@@ -31,13 +34,25 @@ const renderer = new THREE.WebGLRenderer
     // powerPreference: "high-performance"
 });
 renderer.setSize( window.innerWidth, window.innerHeight );
-// renderer.setClearColor( 0xffffff, 0);
 document.body.appendChild( renderer.domElement );
 
 
 //controls.update() must be called after any manual changes to the camera's transform
-const controls = new OrbitControls( camera, renderer.domElement );
-controls.update();
+// const controls = new OrbitControls( camera, renderer.domElement );
+// var controls = new FirstPersonControls( camera, renderer.domElement );
+// controls.movementSpeed = 0;
+// controls.enableed = false;
+// controls.lookSpeed = 0.1;
+// controls.update();
+// camera.position.set( 0, 120, 100 );
+// controls.lookVertical = true;
+
+let controls = new FirstPersonControls( camera, renderer.domElement );
+    controls.movementSpeed = 70;
+    controls.lookSpeed = 0.3;
+    controls.noFly = true;
+    controls.lookVertical = false;
+
 
 
 
@@ -46,7 +61,6 @@ function onWindowResize()
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize( window.innerWidth, window.innerHeight );
-    
 }
 
 
@@ -125,7 +139,7 @@ function onPointerDown( event )
 
 
 
-
+const clock = new THREE.Clock();
 
 // Анимация | каждый кадр
 function animate() {
@@ -143,14 +157,14 @@ function animate() {
 
 	// }
 
-
-    controls.update();
-
+    // controls.update( clock.getDelta() );
+    controls.update(0.01);
 	renderer.render(scene, camera);
+
 }
 // Запуск анимации
 
-animate();
 window.addEventListener('resize', onWindowResize, false)
 document.addEventListener( 'pointerdown', onPointerDown );
+animate();
 
