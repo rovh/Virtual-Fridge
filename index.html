@@ -2,7 +2,7 @@
 <html lang="en"> 
     <head>
         <meta charset="utf-8"> 
-        <title>My first three.js app</title> 
+        <title>Virtual Fridge</title> 
         <style> body { margin: 0; } </style>
         <link rel="stylesheet" href="css/main.css">
         <!-- <link rel="stylesheet" href="css/normalize.css"> -->
@@ -10,25 +10,30 @@
     </head> 
     <body>
 
-        <header class="header" id="container">
+        <!-- <header class="header">
+            
+        </header> -->
 
-            <div class="container header__container">
-                <button class="header__burger-btn" id="burger">
-                    <span></span><span></span><span></span>
-                </button>
-                <!-- <a href="#" class="logo">
-                    <img class="logo__img" src="/img/logo.svg" alt="Логотип">
-                </a> -->
-                <nav class="menu">
-                    <img id="my_image"></img>
-                    <ul class="menu__list">  
-                        <li class='menu__item'>
-                            <a class="menu__link" id="my_word" href="#"></a>
-                        </li>                     
-                    </ul>
-                </nav>
-            </div>
-        </header>
+        <!-- <div class="slide_menu">
+            <nav class="menu">
+                <img id="my_image"></img>
+                <ul class="menu__list">  
+                    <li class='menu__item'>
+                        <a class="menu__link" id="my_word" href="#"></a>
+                    </li>                     
+                
+                </ul>
+            </nav>
+        </div> -->
+
+        <div class="slide_menu">
+            <button class="burger_button" id="burger">
+                Close
+            </button>
+            <p></p>
+            <img id="my_image"></img>
+            <a class="menu__link" id="my_word"></a>
+        </div>
 
     <script src="/js/main.js" type="module"></script>
     <script src="./js/three.js" type="module"></script>

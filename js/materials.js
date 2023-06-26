@@ -32,13 +32,11 @@ export const materials_dictionary =
     //     fragmentShader    : fragmentShader(),
     //     vertexShader        : vertexShader(),
     // }),
-    one: 123,
-    two: 2323,
 
     milk: new THREE.MeshStandardMaterial
     ({
         name: "milk",
-        color: 0xffffff,
+        color: "hsl(30, 0%, 100%)",
         metalness: 0,
         roughness: 0,
     }),
@@ -47,7 +45,7 @@ export const materials_dictionary =
     cheese: new THREE.MeshStandardMaterial
     ({
         name: "cheese",
-        color: 0xffff00,
+        color: "hsl(60, 100%, 80%)",
         metalness: 0,
         roughness: 0,
     }),
@@ -55,7 +53,7 @@ export const materials_dictionary =
     chips: new THREE.MeshStandardMaterial
     ({
         name: "chips",
-        color: 0xffff00,
+        color: "hsl(120, 100%, 80%)",
         metalness: 0,
         roughness: 0,
     }),
@@ -63,7 +61,7 @@ export const materials_dictionary =
     fridge: new THREE.MeshStandardMaterial
     ({
         name: "fridge",
-        color: (0xdddddd),
+        color: "hsl(0, 0%, 80%)",
         metalness: 0,
         roughness: 0,
     }),
@@ -71,7 +69,7 @@ export const materials_dictionary =
     chocolate: new THREE.MeshStandardMaterial
     ({
         name: "chocolate",
-        color: ("hsl(30, 30%, 30%)"),
+        color: "hsl(30, 30%, 30%)",
         metalness: 0,
         roughness: 0,
     }),

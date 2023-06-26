@@ -1,6 +1,6 @@
 import {
     check_intersection,
-    find_product,
+    show_product as show_product,
 } from './functions_for_three.js';
 import {products_dictionary as products} from './dictionary.js'
 import {materials_dictionary as materials} from './materials.js'
@@ -45,12 +45,9 @@ function onWindowResize()
 {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
-
-
     renderer.setSize( window.innerWidth, window.innerHeight );
     
 }
-
 
 
 // Глобальное освещение
@@ -64,7 +61,6 @@ function onWindowResize()
 //     light.castShadow = true;
 //     scene.add(light);
 // }
-
 {
 const light = new THREE.PointLight(0xffffff, 0.7)
 light.position.set(0, 100, 100);
@@ -73,27 +69,18 @@ scene.add(light)
 }
 
 
-
-// let array = [];
-
 const glftLoader = new GLTFLoader();
 glftLoader.load('./static/Fridge.gltf', (gltfScene)=>
 {
 
         gltfScene.scene.rotation.y = Math.PI/-2;
-
         gltfScene.scene.position.y = 3;
-
         const scale_factor = 2;
         gltfScene.scene.scale.set(scale_factor, scale_factor, scale_factor);
-
-
 
         gltfScene.scene.traverse(object => {
             
             object.castShadow = true;
-
-            // console.log(materials['milk'].name)
 
             try
             {
@@ -114,11 +101,7 @@ glftLoader.load('./static/Fridge.gltf', (gltfScene)=>
             }
             catch(TypeError){}
             
-        });
-        
-        // console.log(gltfScene.scene.getObjectByName('Meat')).material.color.setHex(0x00ff00);
-        // console.log(array);
-        
+        });     
 
         scene.add(gltfScene.scene);
 });
@@ -136,7 +119,7 @@ function onPointerDown( event )
         
         let intersected_object = check_intersection(raycaster, scene);
 
-        find_product(intersected_object)
+        show_product(intersected_object)
 
 }
 

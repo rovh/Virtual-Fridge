@@ -28,19 +28,23 @@ const intersects = raycaster.intersectObjects( scene.children, true );
     return intersected_object;
 }
 
-export function find_product(intersected_object)
+export function show_product(intersected_object)
 {
-    console.log(intersected_object.name)
+    // console.log(intersected_object.name)
 
-    let object_name = '';
-
-    object_name = intersected_object.name;
+    let object_name = '';   
     
-    document.getElementById('my_word').innerHTML = object_name;
-
-    if (document.querySelector("header").classList.toggle('open') == false)
+    if (intersected_object.name != null)
     {
-        document.querySelector("header").classList.toggle("open")
+        object_name = intersected_object.name;
+
+        document.getElementById('my_word').innerHTML = object_name;
+
+        document.querySelector(".slide_menu").classList.add("open")
+    }
+    else
+    {
+        document.querySelector(".slide_menu").classList.remove("open")
     }
 
     document.getElementById("my_image").src = ""
