@@ -2,6 +2,8 @@ import {
     check_intersection,
     find_product,
 } from './functions_for_three.js';
+import {products_dictionary as products} from './dictionary.js'
+import {materials_dictionary as materials} from './materials.js'
 
 import * as THREE from 'three';
 
@@ -53,7 +55,8 @@ function onWindowResize()
 
 // Глобальное освещение
 {
-    const light = new THREE.AmbientLight(0xffffff);
+    const light = new THREE.AmbientLight(0xffffff, 0.5);
+    light.castShadow = true;
     scene.add(light);
 }
 // {    
@@ -63,11 +66,11 @@ function onWindowResize()
 // }
 
 {
-    const light = new THREE.PointLight(0xffffff, 1)
-    light.position.set(10, 10, 10)
-    scene.add(light)
-
-    }
+const light = new THREE.PointLight(0xffffff, 0.7)
+light.position.set(0, 100, 100);
+light.castShadow = true;
+scene.add(light)
+}
 
 
 
@@ -84,12 +87,32 @@ glftLoader.load('./static/Fridge.gltf', (gltfScene)=>
         const scale_factor = 2;
         gltfScene.scene.scale.set(scale_factor, scale_factor, scale_factor);
 
+
+
         gltfScene.scene.traverse(object => {
+            
             object.castShadow = true;
-            // if (object.type == "Object3D")
-            // {
-            //     array.push(object.name);
-            // }
+
+            // console.log(materials['milk'].name)
+
+            try
+            {
+                object.material.name;
+
+                if (object.type == "Mesh")
+                {
+                    for (var i in materials)
+                    {
+                        if (object.material.name == materials[i].name)
+                        {
+                            object.material = materials[i];
+                        }
+                    }
+    
+                }
+            
+            }
+            catch(TypeError){}
             
         });
         

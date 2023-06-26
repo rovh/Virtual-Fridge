@@ -1,6 +1,8 @@
+import { products_dictionary as dictionary } from "./dictionary.js";
+
 export function check_intersection(raycaster, scene)
 {
-     
+
 let intersected_object = NaN;
 
 const intersects = raycaster.intersectObjects( scene.children, true );
@@ -33,23 +35,26 @@ export function find_product(intersected_object)
     let object_name = '';
 
     object_name = intersected_object.name;
+    
+    document.getElementById('my_word').innerHTML = object_name;
 
     if (document.querySelector("header").classList.toggle('open') == false)
     {
         document.querySelector("header").classList.toggle("open")
     }
 
-    // var canvas = document.getElementById("my-canvas");
-    // var context = canvas.getContext("2d");
+    document.getElementById("my_image").src = ""
 
-    // context.fillStyle = "blue";
-    // context.font = "bold 16px Arial";
-    // context.textAlign = 'center';
-    // context.textBaseline = 'middle';
-    // context.fillText(object_name, (canvas.width / 2), (canvas.height / 2));
+    for (var i in dictionary)
+    {
+        if (dictionary[i].name == object_name)
+        {
+            document.getElementById("my_image").src = dictionary[i].src;
+            break;
+        }
 
-    // document.getElementById('my_word').value = object_name;
-    document.getElementById('my_word').innerHTML = object_name;
+    }
+    
     
 
 
