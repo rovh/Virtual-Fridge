@@ -20,11 +20,7 @@ scene.background = new THREE.Color( 0xffffff );
 
 // Настройка камеры
 var camera = new THREE.PerspectiveCamera( 50, window.innerWidth/window.innerHeight, 0.1, 20000 );
-// camera.position.set( 0, 120, 100 );
-// camera.position.set( 0, 1020, 1000 );
-// camera.position.y = 1000;
-camera.position.z = 100;
-// camera.position.x = -1000;
+camera.position.set( 0, 60, 100 );
 scene.add(camera);
 
 // Настройка renderer
@@ -48,10 +44,12 @@ document.body.appendChild( renderer.domElement );
 // controls.lookVertical = true;
 
 let controls = new FirstPersonControls( camera, renderer.domElement );
-    controls.movementSpeed = 70;
-    controls.lookSpeed = 0.3;
-    controls.noFly = true;
-    controls.lookVertical = false;
+controls.lookSpeed = 0.1;
+controls.noFly = true;
+controls.activeLook = false;
+// controls.verticalMax = Math.PI - 100;
+// controls.heightCoef = 0;
+// controls.lookVertical = false;
 
 
 
@@ -135,6 +133,10 @@ function onPointerDown( event )
 
         show_product(intersected_object)
 
+        console.log(intersected_object.position);
+        
+        controls.lookAt(intersected_object.position);
+
 }
 
 
@@ -157,8 +159,7 @@ function animate() {
 
 	// }
 
-    // controls.update( clock.getDelta() );
-    controls.update(0.01);
+    controls.update( clock.getDelta() );
 	renderer.render(scene, camera);
 
 }

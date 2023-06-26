@@ -58,6 +58,8 @@ export function show_product(intersected_object)
         }
 
     }
+
+    
     
     
 
