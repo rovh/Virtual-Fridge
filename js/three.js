@@ -6,12 +6,13 @@ import {products_dictionary as products} from './dictionary.js'
 import {materials_dictionary as materials} from './materials.js'
 
 import * as THREE from 'three';
+import * as TWEEN from 'tween.js';
 
 
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { FirstPersonControls } from 'three/addons/controls/FirstPersonControls.js';
-
+import { MapControls } from 'three/addons/controls/MapControls.js';
 
 // Настройки сцены
 const scene = new THREE.Scene();
@@ -35,21 +36,26 @@ document.body.appendChild( renderer.domElement );
 
 //controls.update() must be called after any manual changes to the camera's transform
 // const controls = new OrbitControls( camera, renderer.domElement );
-// var controls = new FirstPersonControls( camera, renderer.domElement );
-// controls.movementSpeed = 0;
-// controls.enableed = false;
-// controls.lookSpeed = 0.1;
-// controls.update();
-// camera.position.set( 0, 120, 100 );
-// controls.lookVertical = true;
+// controls.enablePan = false
 
 let controls = new FirstPersonControls( camera, renderer.domElement );
 controls.lookSpeed = 0.1;
 controls.noFly = true;
 controls.activeLook = false;
-// controls.verticalMax = Math.PI - 100;
-// controls.heightCoef = 0;
-// controls.lookVertical = false;
+controls.verticalMax = Math.PI / -0.5;
+controls.heightSpeed = true;
+controls.heightCoef = 0.1;
+controls.heightMax = 0.1;
+controls.heightMin = 0.1;
+controls.lookVertical = false;
+
+// let controls = new MapControls(camera, renderer.domElement)
+// controls.screenSpacePanning = true;
+
+// let controls2 = new FirstPersonControls( camera, renderer.domElement );
+
+
+
 
 
 
@@ -121,8 +127,14 @@ glftLoader.load('./static/Fridge.gltf', (gltfScene)=>
 
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
-    
-function onPointerDown( event ) 
+
+var position_target  = new THREE.Vector3();
+var tween_position_vector = new THREE.Vector3();
+var tween_position = {x:-11, y:50, z:-11};
+var tween_position_target = {x:0, y:0, z:0};
+
+
+function onPointerDown( event )
 {
 
         pointer.set( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1 );
@@ -133,11 +145,30 @@ function onPointerDown( event )
 
         show_product(intersected_object)
 
-        console.log(intersected_object.position);
-        
-        controls.lookAt(intersected_object.position);
+        position_target = position_target.setFromMatrixPosition(intersected_object.matrixWorld);
+                
+        tween_position_target.x = position_target.x
+        tween_position_target.y = position_target.y
+        tween_position_target.z = position_target.z
 
+        tween.start();
 }
+
+const tween = new TWEEN.Tween(tween_position)
+.to(tween_position_target, 500)
+.onStop(() => {
+    tween_position = tween_position_target
+})
+.onUpdate(function ()
+{
+    tween_position_vector.x = tween_position.x
+    tween_position_vector.y = tween_position.y
+    tween_position_vector.z = tween_position.z
+
+    // console.log(tween_position_vector)
+    controls.lookAt(tween_position_vector);
+})
+
 
 
 
@@ -147,18 +178,19 @@ const clock = new THREE.Clock();
 function animate() {
 	requestAnimationFrame(animate);
 
-    // window.addEventListener( 'pointermove', onPointerMove );
+    if (controls.mouseDragOn == true)
+    {
+        // console.log('123')
+        controls.activeLook = true
+    }
+    else
+    {
+        controls.activeLook = false
+    }
 
-    // raycaster.setFromCamera( pointer, camera );
+    TWEEN.update()
 
-    // const intersects = raycaster.intersectObjects( scene.children );
-
-	// for ( let i = 0; i < intersects.length; i ++ ) {
-
-	// 	intersects[ i ].object.material.color.set( 0xff0000 );
-
-	// }
-
+    // controls2.update( clock.getDelta() );
     controls.update( clock.getDelta() );
 	renderer.render(scene, camera);
 
