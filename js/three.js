@@ -13,6 +13,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { FirstPersonControls } from 'three/addons/controls/FirstPersonControls.js';
 import { MapControls } from 'three/addons/controls/MapControls.js';
+import CameraControls from 'camera-controls';
 
 // Настройки сцены
 const scene = new THREE.Scene();
@@ -49,6 +50,10 @@ controls.heightMax = 0.1;
 controls.heightMin = 0.1;
 controls.lookVertical = false;
 
+
+// CameraControls.install( { THREE: THREE } );
+// const controls = new CameraControls(camera, renderer.domElement)
+// controls.dragToOffset = true
 // let controls = new MapControls(camera, renderer.domElement)
 // controls.screenSpacePanning = true;
 

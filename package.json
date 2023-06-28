@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "camera-controls": "^2.7.0",
     "three": "^0.153.0",
     "tween.js": "^16.6.0"
   },
